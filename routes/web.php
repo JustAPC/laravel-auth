@@ -13,10 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('guest.home');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('auth')
+    ->prefix('user')
+    ->name('user.')
+    ->namespace('User')
+    ->group(function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('posts', 'PostController');
+    });
+
+Route::get('{any?}', function () {
+    return view('guest.home');
+})->where("any", ".*");
