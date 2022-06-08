@@ -18,7 +18,14 @@
     @endif
 
     <div class="bg-dark">
-        <a href="{{ route('user.posts.create') }}" class="btn btn-success fs-5 my-3 ml-3">New Post</a>
+        <div class="d-flex justify-content-between">
+            <a href="{{ route('user.posts.create') }}" class="btn btn-success fs-5 my-3 ml-3">New Post</a>
+            <form class="form-inline mr-3" method="GET" action="{{route('user.posts.index')}}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="title">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+        </div>
+
         <table class="mb-0 pb-3 table table-hover table-dark">
             <thead class="table-head">
                 <tr>

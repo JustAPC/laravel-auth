@@ -14,9 +14,17 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
+
+        if ($request->has('title')) {
+
+            $title = $request -> query('title');
+
+            $posts = Post::where('title', 'like', '%'.$title.'%')->get();
+        } else {
+            $posts = Post::all();
+        }
 
         return view('user.posts.index', compact('posts'));
     }
