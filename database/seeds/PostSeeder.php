@@ -18,9 +18,9 @@ class PostSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $new_post = new Post();
 
-            $new_post->title = $faker->text();
+            $new_post->title = $faker->text(10);
             $new_post->content = $faker->paragraph(2);
-            $new_post->image = $faker->imageUrl();
+            $new_post->image = $faker->imageUrl(250, 250);
             $new_post->slug = Str::slug($new_post->title, '-');
 
             $new_post->save();

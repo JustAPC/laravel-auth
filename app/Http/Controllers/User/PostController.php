@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -14,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+
+        return view('user.posts.index', compact('posts'));
     }
 
     /**
@@ -24,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.posts.create');
     }
 
     /**
@@ -35,7 +39,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $new_post = new Post();
+        $new_post->fill($data);
+        $new_post->slug = Str::slug($request->title, '-');
+        $new_post->save();
+
+        return redirect()->route('user.posts.index', $new_post)->with('message-create', "$new_post->title");
     }
 
     /**
@@ -44,9 +55,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return view('user.posts.show', compact('post'));
     }
 
     /**
@@ -55,9 +66,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('user.posts.edit', compact('post'));
     }
 
     /**
@@ -67,9 +78,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        $post['slug'] = Str::slug($request->title, '-');
+        $post->update($data);
+
+        return redirect()->route('user.posts.show', $post)->with('message-edit', "$post->title");
     }
 
     /**
@@ -78,8 +93,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('user.posts.index', compact('post'))->with('message-delete', "$post->title");
     }
 }

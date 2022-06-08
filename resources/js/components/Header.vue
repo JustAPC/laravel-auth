@@ -1,5 +1,5 @@
 <template>
-    <h1>PROVA</h1>
+    <h1>Benvenuto su Boolpress!</h1>
 </template>
 
 <script>

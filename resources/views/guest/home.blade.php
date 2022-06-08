@@ -63,6 +63,12 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+        .top-left {
+            position: absolute;
+            left: 10px;
+            top: 18px;
+        }
     </style>
 </head>
 
@@ -78,6 +84,14 @@
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}">Register</a>
                     @endif
+                @endauth
+            </div>
+        @endif
+
+        @if (Route::has('login'))
+            <div class="top-left links">
+                @auth
+                    <a href="{{ route('user.posts.index') }}">Posts</a>
                 @endauth
             </div>
         @endif
