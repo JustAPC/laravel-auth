@@ -42,7 +42,9 @@
                         <th scope="row">{{ $post->title }}</th>
                         <td class="col-3">{{ $post->content }}</td>
                         <td>{{ $post->slug }}</td>
-                        <td><img src="{{ $post->image }}" alt="" width="80px"></td>
+                        <td><a href="{{$post->image}}" target="_blank">
+                            <img src="{{ $post->image }}" alt="" width="80px">
+                        <a</td>
                         <td class="col-2">
                             <a href="{{ route('user.posts.show', $post->id) }}" class="btn btn-primary mr-2">View</a>
                             <a href="{{ route('user.posts.edit', $post->id) }}" class="btn btn-warning mr-2">Edit</a>
